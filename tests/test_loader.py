@@ -3,10 +3,10 @@ from pathlib import Path
 
 import pytest
 
-from pocket_toolkit.admin.migrations import run_migrations
-from pocket_toolkit.loader import ManifestError
-from pocket_toolkit.loader.manifest import read_manifest
-from pocket_toolkit.sdk.db import connect
+from pocket_tools.admin.migrations import run_migrations
+from pocket_tools.loader import ManifestError
+from pocket_tools.loader.manifest import read_manifest
+from pocket_tools.sdk.db import connect
 
 
 def write_module(root: Path, folder: str, manifest: str) -> Path:

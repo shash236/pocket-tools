@@ -8,8 +8,8 @@ import sys
 from pathlib import Path
 from string import Template
 
-from pocket_toolkit import __version__
-from pocket_toolkit.checks import check_project
+from pocket_tools import __version__
+from pocket_tools.checks import check_project
 
 TEMPLATES = Path(__file__).resolve().parent / "templates"
 MODULE_ID = re.compile(r"^[a-z][a-z0-9_]*$")
@@ -27,13 +27,13 @@ def init(target: Path, core_path: str | None) -> int:
     sources = ""
     if core_path:
         sources = (
-            f'\n[tool.uv.sources]\npocket-toolkit = {{ path = "{core_path}", editable = true }}\n'
+            f'\n[tool.uv.sources]\npocket-tools = {{ path = "{core_path}", editable = true }}\n'
         )
     major_minor = ".".join(__version__.split(".")[:2])
     pyproject.with_suffix("").write_text(
         Template(pyproject.read_text()).substitute(
             name=re.sub(r"[^a-z0-9-]", "-", target.resolve().name.lower()),
-            core_requirement=f"pocket-toolkit~={major_minor}",
+            core_requirement=f"pocket-tools~={major_minor}",
             sources=sources,
         )
     )
@@ -80,7 +80,7 @@ def dev(project: Path, host: str, port: int) -> int:
 
     os.environ["POCKET_PROJECT_DIR"] = str(project)
     uvicorn.run(
-        "pocket_toolkit.app:create_app",
+        "pocket_tools.app:create_app",
         factory=True,
         host=host,
         port=port,
@@ -100,7 +100,7 @@ def main(argv: list[str] | None = None) -> int:
 
     p = sub.add_parser("init", help="create a new project")
     p.add_argument("target", type=Path)
-    p.add_argument("--core-path", help="use a local pocket-toolkit checkout (for development)")
+    p.add_argument("--core-path", help="use a local pocket-tools checkout (for development)")
     p = sub.add_parser("new", help="add a module from the template")
     p.add_argument("id")
     sub.add_parser("check", help="validate manifests and module import rules")

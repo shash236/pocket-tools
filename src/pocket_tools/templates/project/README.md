@@ -1,6 +1,6 @@
 # My apps
 
-Personal mini apps running on [Pocket Toolkit](https://github.com/).
+Personal mini apps running on [Pocket Tools](https://github.com/).
 
 ```
 uv sync

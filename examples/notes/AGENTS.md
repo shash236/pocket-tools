@@ -1,16 +1,16 @@
 # Agent guide
 
-This project holds the owner's personal mini apps ("modules"), run by **Pocket Toolkit**
-(`pocket-toolkit`, an installed Python package). You are helping the owner add or change modules.
+This project holds the owner's personal mini apps ("modules"), run by **Pocket Tools**
+(`pocket-tools`, an installed Python package). You are helping the owner add or change modules.
 
 ## What you may change
 
 - **`modules/`** and **`tests/`**: yours to edit.
-- **Never edit the installed `pocket_toolkit` package**, and don't vendor or monkeypatch it. Projects
-  are deployed onto a stock `pocket-toolkit`, so changes to it would not exist in production.
+- **Never edit the installed `pocket_tools` package**, and don't vendor or monkeypatch it. Projects
+  are deployed onto a stock `pocket-tools`, so changes to it would not exist in production.
   If a task truly needs something core lacks, stop and tell the owner what is missing.
 - Leave `pyproject.toml` alone unless the owner asks. Don't add dependencies: deployed projects
-  only get what `pocket-toolkit` provides.
+  only get what `pocket-tools` provides.
 
 ## Layout
 
@@ -46,19 +46,19 @@ Served at: UI `/m/<id>/`, API `/m/<id>/api/...`.
 
 ## Rules for module code
 
-- **Imports:** only `pocket_toolkit.sdk.*`, your own module (relative imports), other modules'
+- **Imports:** only `pocket_tools.sdk.*`, your own module (relative imports), other modules'
   `interface` (e.g. `from modules.notes.interface import list_notes`), the standard library,
-  and packages `pocket-toolkit` already installs (fastapi, pydantic, httpx, yaml).
-  Never import other parts of `pocket_toolkit`, or another module's services, models or database.
+  and packages `pocket-tools` already installs (fastapi, pydantic, httpx, yaml).
+  Never import other parts of `pocket_tools`, or another module's services, models or database.
   `pocket check` enforces this.
-- **Database:** `db = ModuleDB.for_module(__name__)` from `pocket_toolkit.sdk.db`. Each module has its
+- **Database:** `db = ModuleDB.for_module(__name__)` from `pocket_tools.sdk.db`. Each module has its
   own `data/<id>.db`. Always use `?` parameters, never string-formatted SQL.
 - **Files:** keep all state in the module's database; don't write files anywhere else.
 - **Migrations:** add a new numbered file for every change. Never edit or delete a migration
   that has been committed. Additive changes only (new tables, new columns); no `DROP` or renames.
 - **Secrets:** declare them in `manifest.yaml` under `secrets`, read them with
-  `pocket_toolkit.sdk.secrets.get_secret("<id>", "NAME")`. Never hardcode keys, never log them.
-- **Auth:** API routers use `dependencies=[Depends(require_owner)]` from `pocket_toolkit.sdk.auth`.
+  `pocket_tools.sdk.secrets.get_secret("<id>", "NAME")`. Never hardcode keys, never log them.
+- **Auth:** API routers use `dependencies=[Depends(require_owner)]` from `pocket_tools.sdk.auth`.
 - **UI:** call your API with relative paths (`fetch("api/items")`), never absolute ones.
   Use `textContent` for user data, not `innerHTML`.
 

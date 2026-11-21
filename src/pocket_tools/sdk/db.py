@@ -4,7 +4,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
-from pocket_toolkit.config import get_settings
+from pocket_tools.config import get_settings
 
 
 def connect(path: Path) -> sqlite3.Connection:

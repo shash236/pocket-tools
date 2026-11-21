@@ -3,7 +3,7 @@
 import logging
 from pathlib import Path
 
-from pocket_toolkit.sdk.db import connect
+from pocket_tools.sdk.db import connect
 
 log = logging.getLogger(__name__)
 

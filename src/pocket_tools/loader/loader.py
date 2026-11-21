@@ -8,8 +8,8 @@ from fastapi import APIRouter, FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
-from pocket_toolkit.admin.migrations import run_migrations
-from pocket_toolkit.loader.manifest import Manifest, ManifestError, read_manifest
+from pocket_tools.admin.migrations import run_migrations
+from pocket_tools.loader.manifest import Manifest, ManifestError, read_manifest
 
 log = logging.getLogger(__name__)
 

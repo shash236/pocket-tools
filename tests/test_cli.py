@@ -1,7 +1,7 @@
 import tomllib
 from pathlib import Path
 
-from pocket_toolkit.cli import main
+from pocket_tools.cli import main
 from tests.conftest import MakeClient
 
 
@@ -12,7 +12,7 @@ def test_init_new_check_and_run(tmp_path: Path, make_client: MakeClient) -> None
     assert (project / "AGENTS.md").is_file()
     pyproject = tomllib.loads((project / "pyproject.toml").read_text())
     assert pyproject["project"]["name"] == "my-apps"
-    assert pyproject["project"]["dependencies"] == ["pocket-toolkit~=0.1"]
+    assert pyproject["project"]["dependencies"] == ["pocket-tools~=0.1"]
 
     assert main(["--project", str(project), "new", "todo_list"]) == 0
     manifest = (project / "modules" / "todo_list" / "manifest.yaml").read_text()
@@ -29,7 +29,7 @@ def test_init_new_check_and_run(tmp_path: Path, make_client: MakeClient) -> None
 def test_init_with_core_path_adds_uv_source(tmp_path: Path) -> None:
     assert main(["init", str(tmp_path / "p"), "--core-path", "../core"]) == 0
     pyproject = tomllib.loads((tmp_path / "p" / "pyproject.toml").read_text())
-    assert pyproject["tool"]["uv"]["sources"]["pocket-toolkit"]["path"] == "../core"
+    assert pyproject["tool"]["uv"]["sources"]["pocket-tools"]["path"] == "../core"
 
 
 def test_init_refuses_non_empty_folder(tmp_path: Path) -> None:

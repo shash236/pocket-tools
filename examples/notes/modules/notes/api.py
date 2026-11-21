@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from pocket_toolkit.sdk.auth import require_owner
+from pocket_tools.sdk.auth import require_owner
 
 from . import services
 from .models import Note, NoteCreate

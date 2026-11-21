@@ -4,8 +4,8 @@ import ast
 from collections.abc import Iterator
 from pathlib import Path
 
-from pocket_toolkit.loader.loader import discover
-from pocket_toolkit.loader.manifest import ManifestError
+from pocket_tools.loader.loader import discover
+from pocket_tools.loader.manifest import ManifestError
 
 
 def imports(path: Path) -> Iterator[str]:
@@ -20,9 +20,9 @@ def imports(path: Path) -> Iterator[str]:
 
 
 def import_allowed(module_id: str, name: str) -> bool:
-    """A module imports only pocket_toolkit.sdk, itself, and other modules' interface."""
+    """A module imports only pocket_tools.sdk, itself, and other modules' interface."""
     parts = name.split(".")
-    if parts[0] == "pocket_toolkit":
+    if parts[0] == "pocket_tools":
         return parts[1:2] == ["sdk"]
     if parts[0] == "modules":
         return len(parts) >= 2 and (parts[1] == module_id or parts[2:3] == ["interface"])

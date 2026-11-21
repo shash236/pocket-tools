@@ -1,4 +1,4 @@
-"""Pytest helpers for user projects. Enable with `pytest_plugins = ["pocket_toolkit.testing"]`."""
+"""Pytest helpers for user projects. Enable with `pytest_plugins = ["pocket_tools.testing"]`."""
 
 from collections.abc import Iterator
 from pathlib import Path
@@ -6,8 +6,8 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from pocket_toolkit.app import create_app
-from pocket_toolkit.config import get_settings
+from pocket_tools.app import create_app
+from pocket_tools.config import get_settings
 
 
 @pytest.fixture

@@ -1,15 +1,15 @@
-# Pocket Toolkit
+# Pocket Tools
 
-Your own toolkit of small, personal apps. Describe an app to your coding agent, it writes a
+Your own pocket-sized set of personal apps. Describe an app to your coding agent, it writes a
 module, and it runs: locally, on your own server, or (later) hosted for you.
 
-This repo is **`pocket-toolkit`**: the library that hosts modules. You don't fork or edit it;
+This repo is **`pocket-tools`**: the library that hosts modules. You don't fork or edit it;
 your project depends on it.
 
 ## Start a project
 
 ```
-uvx --from pocket-toolkit pocket init my-apps   # once published; for now see below
+uvx --from pocket-tools pocket init my-apps   # once published; for now see below
 cd my-apps
 uv sync
 uv run pocket new expenses

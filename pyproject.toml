@@ -1,5 +1,5 @@
 [project]
-name = "pocket-toolkit"
+name = "pocket-tools"
 dynamic = ["version"]
 description = "Run your own personal mini apps: a FastAPI host for modules your agent writes."
 requires-python = ">=3.12"
@@ -13,17 +13,17 @@ dependencies = [
 ]
 
 [project.scripts]
-pocket = "pocket_toolkit.cli:main"
+pocket = "pocket_tools.cli:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
-path = "src/pocket_toolkit/__init__.py"
+path = "src/pocket_tools/__init__.py"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/pocket_toolkit"]
+packages = ["src/pocket_tools"]
 
 [dependency-groups]
 dev = [
@@ -42,7 +42,7 @@ target-version = "py312"
 select = ["E", "F", "I", "UP", "B"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["pocket_toolkit", "modules"]
+known-first-party = ["pocket_tools", "modules"]
 
 [tool.pyright]
 include = ["src", "tests"]

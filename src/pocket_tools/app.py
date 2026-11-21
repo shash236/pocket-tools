@@ -3,10 +3,10 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
-from pocket_toolkit.admin.api import router as admin_router
-from pocket_toolkit.config import get_settings
-from pocket_toolkit.loader import load_modules
-from pocket_toolkit.log import configure_logging
+from pocket_tools.admin.api import router as admin_router
+from pocket_tools.config import get_settings
+from pocket_tools.loader import load_modules
+from pocket_tools.log import configure_logging
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 
@@ -16,7 +16,7 @@ def create_app() -> FastAPI:
     configure_logging(settings.log_level)
     settings.data_dir.mkdir(parents=True, exist_ok=True)
 
-    app = FastAPI(title="Pocket Toolkit")
+    app = FastAPI(title="Pocket Tools")
 
     @app.get("/health")
     def health() -> dict[str, str]:

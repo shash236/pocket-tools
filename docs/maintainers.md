@@ -1,15 +1,15 @@
 # Maintainer notes
 
-For people (and agents) working on `pocket-toolkit`. Users' agents read the project template's
+For people (and agents) working on `pocket-tools`. Users' agents read the project template's
 `AGENTS.md` instead. Update the Status and Decisions sections as work lands.
 
 ## Product in one paragraph
 
-Pocket Toolkit lets someone describe a small personal app to their coding agent and have
+Pocket Tools lets someone describe a small personal app to their coding agent and have
 it running quickly. **North star: a user can quick-deploy a module they just built, and we host
-it on our fleet.** `pocket-toolkit` (this repo) is a pip-installable library: the host server,
-`pocket_toolkit.sdk` for modules, a home-screen shell, an admin UI, and the `pocket` CLI. A user's
-project is just `pyproject.toml` (pinning `pocket-toolkit`), `AGENTS.md` and `modules/`.
+it on our fleet.** `pocket-tools` (this repo) is a pip-installable library: the host server,
+`pocket_tools.sdk` for modules, a home-screen shell, an admin UI, and the `pocket` CLI. A user's
+project is just `pyproject.toml` (pinning `pocket-tools`), `AGENTS.md` and `modules/`.
 Deploying = our image with their pinned core version + their `modules/`.
 
 The earlier, heavier design (per-app sandboxed processes, MCP build links, beta/approve, PWA
@@ -19,23 +19,23 @@ pairing) is in `docs/original-architecture.md`. It's reference material, not the
 
 | # | Decision | Why |
 | --- | --- | --- |
-| 1 | Core is a **library** (`pocket-toolkit`), not a repo users fork | Users can't edit core, so any project is deployable on our stock image; upgrades are a version bump |
+| 1 | Core is a **library** (`pocket-tools`), not a repo users fork | Users can't edit core, so any project is deployable on our stock image; upgrades are a version bump |
 | 2 | A user project = `pyproject.toml` + `AGENTS.md` + `modules/` (+ `tests/`), created by `pocket init` | The deployable unit is the modules folder, nothing else |
 | 3 | The user's own coding agent writes modules, guided by `AGENTS.md`; no MCP build sessions | Much less to build |
 | 4 | Modules run **in-process** as FastAPI routers | All modules in one project belong to one user |
 | 5 | On our fleet: **one container per user project**, not per module. Docker is only on our side | Isolation between users is what matters; users still just `uv run` |
-| 6 | Modules touch the outside world only through `pocket_toolkit.sdk` (db, secrets, auth; later llm, files) | Lets us control storage, backups, limits and secrets per hosted project |
+| 6 | Modules touch the outside world only through `pocket_tools.sdk` (db, secrets, auth; later llm, files) | Lets us control storage, backups, limits and secrets per hosted project |
 | 7 | No module-level dependencies yet: modules use stdlib + what core installs (fastapi, pydantic, httpx, yaml) | We build the hosted image; arbitrary pip installs are a risk. Revisit with manifest-declared deps |
-| 8 | `pocket_toolkit.sdk` is the public API, semver'd. Everything else in `toolkit` is internal | Every hosted project pins a core version; sdk breaks are breaking changes |
+| 8 | `pocket_tools.sdk` is the public API, semver'd. Everything else in `pocket_tools` is internal | Every hosted project pins a core version; sdk breaks are breaking changes |
 | 9 | Modules talk via `modules/<id>/interface.py`, never each other's DBs; one SQLite file per module | Clear contracts; data can be moved/backed up per module |
 | 10 | Module UI is a no-build static SPA at `/m/<id>/`, API at `/m/<id>/api` | No JS toolchain for users or their agents |
-| 11 | Import rules live in `pocket_toolkit.checks` (AST), run by `pocket check` and by our tests | Same rules locally, in CI, and at deploy time |
+| 11 | Import rules live in `pocket_tools.checks` (AST), run by `pocket check` and by our tests | Same rules locally, in CI, and at deploy time |
 | 12 | Settings via env with `POCKET_` prefix; `project_dir` defaults to cwd, `data_dir` to `<project>/data` | Same code runs locally, in tests and in a container |
 
 ## Layout
 
 ```
-src/pocket_toolkit/
+src/pocket_tools/
   app.py              create_app() factory (uvicorn --factory)
   config.py           Settings
   loader/             discover modules, validate manifest, migrate, mount API + UI
@@ -57,7 +57,7 @@ Scaffold (2026-11-11):
 - [x] Library packaging (hatchling, `pocket` script), uv, ruff, pyright, pytest, CI
 - [x] Loader, manifest validation, migrations runner (one transaction per file)
 - [x] CLI: `init`, `new`, `check`, `dev`
-- [x] `pocket_toolkit.testing` fixture for user projects
+- [x] `pocket_tools.testing` fixture for user projects
 - [x] Shell grid at `/`, admin page at `/admin/` (module list only)
 - [x] `examples/notes`, module and project templates
 - [ ] Admin auth (owner login, sessions); then make `sdk.auth.require_owner` real
@@ -66,7 +66,7 @@ Scaffold (2026-11-11):
 - [ ] Migration guard: reject DROP / RENAME (sqlglot), in `pocket check`
 - [ ] `sdk.llm` (gateway, per-project budget)
 - [ ] `pocket upgrade`: refresh AGENTS.md from the installed core version
-- [ ] Publish `pocket-toolkit` (PyPI or private index)
+- [ ] Publish `pocket-tools` (PyPI or private index)
 - [ ] Hosting: Dockerfile for the base image, `pocket deploy`, per-user containers
 - [ ] Self-hosting: exposing an instance to the internet
 
@@ -86,4 +86,4 @@ Scaffold (2026-11-11):
 - Python 3.12, `uv`. Core checks: `uv run ruff check && uv run ruff format --check && uv run pyright && uv run pytest`.
 - Example project: `cd examples/notes && uv run pocket check && uv run pytest && uv run pyright`.
 - Dev server: `cd examples/notes && uv run pocket dev`.
-- Keep `pocket_toolkit.sdk` small and stable. Anything new that modules need goes there, nowhere else.
+- Keep `pocket_tools.sdk` small and stable. Anything new that modules need goes there, nowhere else.

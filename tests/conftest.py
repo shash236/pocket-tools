@@ -4,8 +4,8 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from pocket_toolkit.app import create_app
-from pocket_toolkit.config import get_settings
+from pocket_tools.app import create_app
+from pocket_tools.config import get_settings
 
 REPO = Path(__file__).resolve().parent.parent
 NOTES_PROJECT = REPO / "examples" / "notes"

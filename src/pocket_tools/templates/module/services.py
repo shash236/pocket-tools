@@ -1,4 +1,4 @@
-from pocket_toolkit.sdk.db import ModuleDB
+from pocket_tools.sdk.db import ModuleDB
 
 from .models import Item, ItemCreate
 

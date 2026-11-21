@@ -233,7 +233,7 @@ name = "notes"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
-    { name = "pocket-toolkit" },
+    { name = "pocket-tools" },
 ]
 
 [package.dev-dependencies]
@@ -245,7 +245,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pocket-toolkit", editable = "../../" }]
+requires-dist = [{ name = "pocket-tools", editable = "../../" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -286,7 +286,7 @@ wheels = [
 ]
 
 [[package]]
-name = "pocket-toolkit"
+name = "pocket-tools"
 source = { editable = "../../" }
 dependencies = [
     { name = "fastapi" },

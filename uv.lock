@@ -259,7 +259,7 @@ wheels = [
 ]
 
 [[package]]
-name = "pocket-toolkit"
+name = "pocket-tools"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi" },
