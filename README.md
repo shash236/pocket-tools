@@ -6,10 +6,13 @@ module, and it runs: locally, on your own server, or (later) hosted for you.
 This repo is **`pocket-tools`**: the library that hosts modules. You don't fork or edit it;
 your project depends on it.
 
+> **Pre-alpha.** Owner login and the secrets vault are not built yet: every route is open.
+> Run it only on your own machine; don't expose it to the internet.
+
 ## Start a project
 
 ```
-uvx --from pocket-tools pocket init my-apps   # once published; for now see below
+uvx --from pocket-tools pocket init my-apps
 cd my-apps
 uv sync
 uv run pocket new expenses
