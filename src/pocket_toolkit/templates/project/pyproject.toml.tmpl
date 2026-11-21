@@ -1,0 +1,25 @@
+[project]
+name = "$name"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = ["$core_requirement"]
+
+[dependency-groups]
+dev = ["httpx>=0.27", "pyright>=1.1.390", "pytest>=8.3", "ruff>=0.8"]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint.isort]
+known-first-party = ["modules"]
+
+[tool.pyright]
+include = ["modules", "tests"]
+pythonVersion = "3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+$sources

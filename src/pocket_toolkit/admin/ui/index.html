@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { margin: 0; padding: 24px 16px; max-width: 720px; margin-inline: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 8px 4px; border-bottom: 1px solid color-mix(in srgb, CanvasText 15%, Canvas); }
+  </style>
+</head>
+<body>
+  <p><a href="/">&larr; Apps</a></p>
+  <h1>Admin</h1>
+  <h2>Modules</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Name</th><th>Version</th></tr></thead>
+    <tbody id="modules"></tbody>
+  </table>
+  <!-- TODO: secrets, settings, versioning (sync to GitHub) -->
+  <script>
+    fetch("/admin/api/modules")
+      .then((r) => r.json())
+      .then((modules) => {
+        const body = document.getElementById("modules");
+        for (const m of modules) {
+          const tr = document.createElement("tr");
+          for (const v of [m.id, m.name, m.version]) {
+            const td = document.createElement("td");
+            td.textContent = v;
+            tr.append(td);
+          }
+          body.append(tr);
+        }
+      });
+  </script>
+</body>
+</html>

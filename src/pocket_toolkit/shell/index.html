@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket Toolkit</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { margin: 0; padding: 24px 16px; max-width: 720px; margin-inline: auto; }
+    header { display: flex; justify-content: space-between; align-items: center; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 16px; margin-top: 24px; }
+    .tile { display: flex; flex-direction: column; align-items: center; gap: 8px; text-decoration: none; color: inherit; }
+    .icon { width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center;
+            font-size: 28px; background: color-mix(in srgb, CanvasText 10%, Canvas); }
+    .name { font-size: 13px; text-align: center; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Apps</h1>
+    <a href="/admin/">Admin</a>
+  </header>
+  <div class="grid" id="grid"></div>
+  <script>
+    fetch("/admin/api/modules")
+      .then((r) => r.json())
+      .then((modules) => {
+        const grid = document.getElementById("grid");
+        for (const m of modules.filter((m) => m.url)) {
+          const a = document.createElement("a");
+          a.className = "tile";
+          a.href = m.url;
+          a.innerHTML = '<div class="icon"></div><div class="name"></div>';
+          a.querySelector(".icon").textContent = m.name[0].toUpperCase();
+          a.querySelector(".name").textContent = m.name;
+          grid.append(a);
+        }
+      });
+  </script>
+</body>
+</html>

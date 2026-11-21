@@ -1,0 +1,9 @@
+# Created by `pocket new <id>`; id must equal the folder name.
+id: your_id
+name: Items
+version: 0.1.0
+icon: box
+description: Starter module. Replace with what your module does.
+# secrets:
+#   - { name: API_TOKEN, description: "Token for some API", optional: true }
+# depends_on: [notes]
